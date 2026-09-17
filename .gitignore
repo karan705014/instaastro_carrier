@@ -6,7 +6,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Environment variables and secrets (Never commit these!)
+# Environment variables and secrets 
 .env
 .env.*
 .env.local
