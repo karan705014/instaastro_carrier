@@ -9,7 +9,7 @@ class Job(models.Model):
         ONSITE = "ONSITE", "On-site"
         REMOTE = "REMOTE", "Remote"
         HYBRID = "HYBRID", "Hybrid"
-
+   #Status Choices for Job Status
     class Status(models.TextChoices):
         ACTIVE = "ACTIVE", "Active"
         CLOSED = "CLOSED", "Closed"
