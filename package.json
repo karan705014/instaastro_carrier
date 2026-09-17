@@ -19,6 +19,7 @@
   "homepage": "https://github.com/karan705014/instaastro_carrier#readme",
   "dependencies": {
     "@tailwindcss/cli": "^4.3.3",
+    "bootstrap": "^5.3.8",
     "tailwindcss": "^4.3.3"
   }
 }

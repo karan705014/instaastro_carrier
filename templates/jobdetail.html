@@ -4,34 +4,39 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{{ job.role }} | InstaAstro Careers</title>
 
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Existing CSS -->
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+
 </head>
 
-<body class="bg-gray-50 text-gray-900">
+
+<body class="bg-light text-dark">
 
 
-    <!-- Header -->
-    <header class="bg-white border-b border-gray-200">
+    <!-- =========================
+         Header
+    ========================== -->
 
-        <div class="max-w-6xl mx-auto px-6 py-5">
+    <header class="bg-white border-bottom">
 
-            <a href="{% url 'careers' %}"
-                class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+        <div class="container py-3">
 
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-
-                    <path d="m15 18-6-6 6-6"></path>
-
-                </svg>
-
-                Back to Careers
-
+            <a
+                href="{% url 'careers' %}"
+                class="text-decoration-none text-secondary small"
+            >
+                ← Back to Careers
             </a>
 
         </div>
@@ -39,36 +44,55 @@
     </header>
 
 
-    <!-- Hero -->
-    <section class="bg-orange-500">
+    <!-- =========================
+         Job Header
+    ========================== -->
 
-        <div class="max-w-6xl mx-auto px-6 py-14">
+    <section class="bg-white border-bottom">
 
-            <div class="max-w-4xl">
+        <div class="container py-4">
 
-                <!-- Job Type -->
-                <span class="inline-block bg-white/15 text-white px-4 py-1.5 rounded-full text-sm font-semibold mb-5">
-                    {{ job.get_job_type_display }}
-                </span>
+            <div class="row">
+
+                <div class="col-lg-9">
+
+                    <!-- Job Badges -->
+
+                    <div class="d-flex flex-wrap gap-2 mb-2">
+
+                        <span class="badge text-warning-emphasis bg-warning-subtle">
+                            {{ job.get_job_type_display }}
+                        </span>
+
+                        <span class="badge bg-light text-dark border">
+                            {{ job.get_work_mode_display }}
+                        </span>
+
+                        <span class="badge bg-light text-dark border">
+                            {{ job.get_department_display }}
+                        </span>
+
+                    </div>
 
 
-                <!-- Job Title -->
-                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight">
-                    {{ job.role }}
-                </h1>
+                    <!-- Job Title -->
+
+                    <h1 class="h2 fw-bold mb-2">
+                        {{ job.role }}
+                    </h1>
 
 
-                {% if job.summary %}
-                <p class="mt-5 text-orange-50 text-lg leading-relaxed max-w-3xl">
-                    {{ job.summary }}
-                </p>
-                {% endif %}
+                    <!-- Summary -->
 
+                    {% if job.summary %}
 
-                <!-- Posted Date -->
-                <p class="mt-5 text-orange-100 text-sm">
-                    Posted {{ job.job_post_date|date:"M d, Y" }}
-                </p>
+                    <p class="text-secondary mb-0">
+                        {{ job.summary }}
+                    </p>
+
+                    {% endif %}
+
+                </div>
 
             </div>
 
@@ -77,356 +101,332 @@
     </section>
 
 
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-6 py-10">
+    <!-- =========================
+         Main Content
+    ========================== -->
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <main class="container py-4">
 
 
-            <!-- Left Content -->
-            <div class="lg:col-span-2 space-y-8">
+        <!-- Outer Job Box -->
 
+        <div class="position-relative bg-white border rounded-3 shadow-sm p-4 p-lg-5">
 
-                <!-- Job Overview -->
-                <section class="bg-white border border-gray-200 rounded-xl p-6 md:p-8">
 
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
-                        Job Overview
-                    </h2>
+            <!-- =========================
+                 Apply Button
+            ========================== -->
 
+            <div class="position-absolute top-0 end-0 p-4">
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-
-                        <!-- Department -->
-                        {% if job.department %}
-                        <div class="flex gap-3">
-
-                            <div
-                                class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
-
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-orange-500">
-
-                                    <rect x="3" y="7" width="18" height="13" rx="2" stroke-width="1.8"></rect>
-
-                                    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="1.8"></path>
-
-                                </svg>
-
-                            </div>
-
-                            <div>
-                                <p class="text-sm text-gray-400">
-                                    Department
-                                </p>
-
-                                <p class="font-medium text-gray-900 mt-1">
-                                    {{ job.department }}
-                                </p>
-                            </div>
-
-                        </div>
-                        {% endif %}
-
-
-                        <!-- Location -->
-                        {% if job.location %}
-                        <div class="flex gap-3">
-
-                            <div
-                                class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
-
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-orange-500">
-
-                                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" stroke-width="1.8"></path>
-
-                                    <circle cx="12" cy="10" r="2.5" stroke-width="1.8"></circle>
-
-                                </svg>
-
-                            </div>
-
-                            <div>
-                                <p class="text-sm text-gray-400">
-                                    Location
-                                </p>
-
-                                <p class="font-medium text-gray-900 mt-1">
-                                    {{ job.location }}
-                                </p>
-                            </div>
-
-                        </div>
-                        {% endif %}
-
-
-                        <!-- Work Mode -->
-                        {% if job.work_mode %}
-                        <div class="flex gap-3">
-
-                            <div
-                                class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
-
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-orange-500">
-
-                                    <rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.8"></rect>
-
-                                    <path d="M8 21h8M12 18v3" stroke-width="1.8" stroke-linecap="round"></path>
-
-                                </svg>
-
-                            </div>
-
-                            <div>
-                                <p class="text-sm text-gray-400">
-                                    Work Mode
-                                </p>
-
-                                <p class="font-medium text-gray-900 mt-1">
-                                    {{ job.work_mode }}
-                                </p>
-                            </div>
-
-                        </div>
-                        {% endif %}
-
-
-                        <!-- Experience -->
-                        {% if job.min_exp or job.max_exp %}
-                        <div class="flex gap-3">
-
-                            <div
-                                class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
-
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-orange-500">
-
-                                    <rect x="3" y="7" width="18" height="13" rx="2" stroke-width="1.8"></rect>
-
-                                    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="1.8"></path>
-
-                                </svg>
-
-                            </div>
-
-                            <div>
-                                <p class="text-sm text-gray-400">
-                                    Experience
-                                </p>
-
-                                <p class="font-medium text-gray-900 mt-1">
-                                    {{ job.min_exp }} - {{ job.max_exp }} years
-                                </p>
-                            </div>
-
-                        </div>
-                        {% endif %}
-
-
-                        <!-- Vacancies -->
-                        {% if job.vacancies %}
-                        <div class="flex gap-3">
-
-                            <div
-                                class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
-
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-orange-500">
-
-                                    <circle cx="9" cy="8" r="3" stroke-width="1.8"></circle>
-
-                                    <path d="M3 20a6 6 0 0 1 12 0" stroke-width="1.8"></path>
-
-                                    <circle cx="17" cy="8" r="2.5" stroke-width="1.8"></circle>
-
-                                </svg>
-
-                            </div>
-
-                            <div>
-                                <p class="text-sm text-gray-400">
-                                    Vacancies
-                                </p>
-
-                                <p class="font-medium text-gray-900 mt-1">
-                                    {{ job.vacancies }} Positions
-                                </p>
-                            </div>
-
-                        </div>
-                        {% endif %}
-
-
-                        <!-- Salary -->
-                        <div class="flex gap-3">
-
-                            <div
-                                class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
-
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-orange-500">
-
-                                    <rect x="3" y="6" width="18" height="12" rx="2" stroke-width="1.8"></rect>
-
-                                    <circle cx="12" cy="12" r="2.5" stroke-width="1.8"></circle>
-
-                                </svg>
-
-                            </div>
-
-                            <div>
-
-                                <p class="text-sm text-gray-400">
-                                    Salary
-                                </p>
-
-                                {% if job.min_salary and job.max_salary %}
-
-                                <p class="font-medium text-gray-900 mt-1">
-                                    ₹{{ job.min_salary }} - ₹{{ job.max_salary }}
-                                </p>
-
-                                {% else %}
-
-                                <p class="font-medium text-gray-900 mt-1">
-                                    Salary Not Disclosed
-                                </p>
-
-                                {% endif %}
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </section>
-
-
-                <!-- Job Description -->
-                {% if job.description %}
-                <section class="bg-white border border-gray-200 rounded-xl p-6 md:p-8">
-
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
-                        Job Description
-                    </h2>
-
-                    <div class="text-gray-600 leading-7 space-y-4">
-                        {{ job.description|safe }}
-                    </div>
-
-                </section>
-                {% endif %}
-
-
-                <!-- Education Requirement -->
-                {% if job.edu_requirment %}
-                <section class="bg-white border border-gray-200 rounded-xl p-6 md:p-8">
-
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
-                        Education Requirement
-                    </h2>
-
-                    <div class="text-gray-600 leading-7">
-                        {{ job.edu_requirment|safe }}
-                    </div>
-
-                </section>
-                {% endif %}
-
-
-                <!-- Skills -->
-                {% if job.skill_requirment %}
-                <section class="bg-white border border-gray-200 rounded-xl p-6 md:p-8">
-
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
-                        Skills & Requirements
-                    </h2>
-
-                    <div class="text-gray-600 leading-7">
-                        {{ job.skill_requirment|safe }}
-                    </div>
-
-                </section>
-                {% endif %}
+                <button
+                    type="button"
+                    class="btn btn-warning fw-semibold px-4"
+                >
+                    Apply Now
+                </button>
 
             </div>
 
 
-            <!-- Right Sidebar -->
-            <aside class="lg:col-span-1">
+            <!-- =========================
+                 Content
+            ========================== -->
 
-                <div class="bg-white border border-gray-200 rounded-xl p-6 lg:sticky lg:top-6">
-
-                    <h2 class="text-xl font-semibold text-gray-900">
-                        Interested in this role?
-                    </h2>
-
-                    <p class="text-gray-500 text-sm leading-6 mt-3">
-                        Take the next step and apply for this position at InstaAstro.
-                    </p>
+            <div class="row g-5">
 
 
-                    <!-- Apply Button -->
-                    <a href="#"
-                        class="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3.5 rounded-lg mt-6 transition">
-                        Apply Now
-                    </a>
+                <!-- =========================
+                     Left - Description
+                ========================== -->
+
+                <div class="col-lg-8 pe-lg-4">
 
 
-                    <!-- Deadline -->
-                    {% if job.end_apply_date %}
-                    <div class="border-t border-gray-100 mt-6 pt-5">
+                    <!-- Job Description -->
 
-                        <p class="text-sm text-gray-400">
-                            Application Deadline
-                        </p>
+                    <section>
 
-                        <p class="font-medium text-gray-900 mt-1">
-                            {{ job.end_apply_date|date:"M d, Y" }}
-                        </p>
+                        <h2 class="h5 fw-bold mb-3">
+                            Job Description
+                        </h2>
 
-                    </div>
-                    {% endif %}
+                        <div class="text-secondary">
+
+                            {{ job.description|linebreaks }}
+
+                        </div>
+
+                    </section>
 
 
-                    <!-- Job Posted -->
-                    <div class="border-t border-gray-100 mt-5 pt-5">
+                    <!-- Education -->
 
-                        <p class="text-sm text-gray-400">
-                            Job Posted
-                        </p>
+                    <section class="mt-5">
 
-                        <p class="font-medium text-gray-900 mt-1">
-                            {{ job.job_post_date|date:"M d, Y" }}
-                        </p>
+                        <h2 class="h5 fw-bold mb-3">
+                            Education Requirement
+                        </h2>
 
-                    </div>
+                        <div class="text-secondary">
+
+                            {{ job.edu_requirment|linebreaks }}
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- Skills -->
+
+                    <section class="mt-5">
+
+                        <h2 class="h5 fw-bold mb-3">
+                            Skills Required
+                        </h2>
+
+                        <div class="text-secondary">
+
+                            {{ job.skill_requirment|linebreaks }}
+
+                        </div>
+
+                    </section>
+
 
                 </div>
 
-            </aside>
+
+                <!-- =========================
+                     Right - Job Details
+                ========================== -->
+
+                <div class="col-lg-4">
+
+
+                    <div class="border rounded-3 p-3 mt-lg-5">
+
+
+                        <h2 class="h6 fw-bold mb-3">
+                            Job Details
+                        </h2>
+
+
+                        <div class="small">
+
+
+                            <!-- Location -->
+
+                            <div class="d-flex justify-content-between gap-3 py-2 border-bottom">
+
+                                <span class="text-secondary">
+                                    Location
+                                </span>
+
+                                <span class="fw-semibold text-end">
+                                    {{ job.location }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- Department -->
+
+                            <div class="d-flex justify-content-between gap-3 py-2 border-bottom">
+
+                                <span class="text-secondary">
+                                    Department
+                                </span>
+
+                                <span class="fw-semibold text-end">
+                                    {{ job.get_department_display }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- Job Type -->
+
+                            <div class="d-flex justify-content-between gap-3 py-2 border-bottom">
+
+                                <span class="text-secondary">
+                                    Job Type
+                                </span>
+
+                                <span class="fw-semibold text-end">
+                                    {{ job.get_job_type_display }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- Work Mode -->
+
+                            <div class="d-flex justify-content-between gap-3 py-2 border-bottom">
+
+                                <span class="text-secondary">
+                                    Work Mode
+                                </span>
+
+                                <span class="fw-semibold text-end">
+                                    {{ job.get_work_mode_display }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- Experience -->
+
+                            <div class="d-flex justify-content-between gap-3 py-2 border-bottom">
+
+                                <span class="text-secondary">
+                                    Experience
+                                </span>
+
+                                <span class="fw-semibold text-end">
+
+                                    {% if job.min_exp == job.max_exp %}
+
+                                        {{ job.min_exp }} years
+
+                                    {% else %}
+
+                                        {{ job.min_exp }} - {{ job.max_exp }} years
+
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- Vacancies -->
+
+                            <div class="d-flex justify-content-between gap-3 py-2 border-bottom">
+
+                                <span class="text-secondary">
+                                    Vacancies
+                                </span>
+
+                                <span class="fw-semibold">
+                                    {{ job.vacancies }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- Salary -->
+
+                            <div class="d-flex justify-content-between gap-3 py-2">
+
+                                <span class="text-secondary">
+                                    Salary
+                                </span>
+
+                                <span class="fw-semibold text-end">
+
+                                    {% if job.min_salary and job.max_salary %}
+
+                                        ₹{{ job.min_salary }} - ₹{{ job.max_salary }}
+
+                                    {% elif job.min_salary %}
+
+                                        ₹{{ job.min_salary }}+
+
+                                    {% elif job.max_salary %}
+
+                                        Up to ₹{{ job.max_salary }}
+
+                                    {% else %}
+
+                                        Not Disclosed
+
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Application Deadline -->
+
+                    <div class="text-center mt-3">
+
+                        <span class="small text-secondary">
+                            Apply before
+                        </span>
+
+                        <span class="small fw-semibold">
+                            {{ job.end_apply_date|date:"M d, Y" }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
 
         </div>
+
 
     </main>
 
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-200 bg-white mt-10">
+    <!-- =========================
+         Careers CTA
+    ========================== -->
 
-        <div class="max-w-6xl mx-auto px-6 py-8 text-center">
+    <section class="bg-warning">
 
-            <p class="text-sm text-gray-500">
+        <div class="container py-5 text-center">
+
+            <h2 class="fw-bold">
+                Grow With InstaAstro
+            </h2>
+
+            <p
+                class="text-dark mx-auto mt-2 mb-0"
+                style="max-width: 650px;"
+            >
+                Be part of a team building technology that connects
+                people with astrology and meaningful experiences.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         Footer
+    ========================== -->
+
+    <footer class="bg-white border-top">
+
+        <div class="container py-3 text-center">
+
+            <p class="small text-secondary mb-0">
                 © {% now "Y" %} InstaAstro. All rights reserved.
             </p>
 
         </div>
 
     </footer>
+
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    </script>
 
 </body>
 

@@ -18,7 +18,6 @@ def ListAPI(request):
 # for display search data
 def Job_List(request):
     jobs = Job.objects.all()
-
     search = request.GET.get("q", "").strip()
     if search:
         words = search.split()
