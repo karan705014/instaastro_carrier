@@ -57,7 +57,10 @@
 
             <div class="mx-auto mt-5" style="max-width: 900px;">
 
-                <form method="GET" action="{% url 'job-list' %}" id="searchForm" onsubmit="return validateSearch()">
+                <form method="GET"
+                      action="{% url 'job-list' %}"
+                      id="searchForm"
+                      onsubmit="return validateSearch()">
 
 
                     <div class="row g-2 align-items-center">
@@ -74,13 +77,22 @@
 
                                 <span class="input-group-text bg-white border-end-0">
 
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        class="text-secondary">
+                                    <svg width="20"
+                                         height="20"
+                                         viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         class="text-secondary">
 
-                                        <circle cx="11" cy="11" r="7" stroke-width="2">
+                                        <circle cx="11"
+                                                cy="11"
+                                                r="7"
+                                                stroke-width="2">
                                         </circle>
 
-                                        <path d="m20 20-4-4" stroke-width="2" stroke-linecap="round">
+                                        <path d="m20 20-4-4"
+                                              stroke-width="2"
+                                              stroke-linecap="round">
                                         </path>
 
                                     </svg>
@@ -90,14 +102,18 @@
 
                                 <!-- Search Input -->
 
-                                <input type="text" name="q" id="searchInput" value="{{ search }}"
-                                    placeholder="Search jobs by role, skills, or location..."
-                                    class="form-control border-start-0">
+                                <input type="text"
+                                       name="q"
+                                       id="searchInput"
+                                       value="{{ search }}"
+                                       placeholder="Search jobs by role, skills, or location..."
+                                       class="form-control border-start-0">
 
 
                                 <!-- Search Button -->
 
-                                <button type="submit" class="btn btn-warning px-4 fw-semibold">
+                                <button type="submit"
+                                        class="btn btn-warning px-4 fw-semibold">
 
                                     Search Jobs
 
@@ -112,8 +128,10 @@
 
                         <div class="col-12 col-sm-auto">
 
-                            <select name="department" class="form-select" style="height: 48px; min-width: 190px;"
-                                onchange="this.form.submit()">
+                            <select name="department"
+                                    class="form-select"
+                                    style="height: 48px; min-width: 190px;"
+                                    onchange="this.form.submit()">
 
 
                                 <option value="">
@@ -125,7 +143,11 @@
 
                                 {% for value, label in departments %}
 
-                                <option value="{{ value }}" {% if department==value %}selected{% endif %}>
+                                <!-- FIXED: spaces around == -->
+
+                                <option value="{{ value }}"
+                                        {% if department == value %}selected{% endif %}>
+
                                     {{ label }}
 
                                 </option>
@@ -141,7 +163,8 @@
 
                     <!-- Search Error -->
 
-                    <div id="searchError" class="text-danger small mt-2 d-none">
+                    <div id="searchError"
+                         class="text-danger small mt-2 d-none">
 
                         Please enter at least 3 characters to search.
 
@@ -243,7 +266,8 @@
 
                 <!-- Entire Card Clickable -->
 
-                <a href="{% url 'job_detail' job.id %}" class="text-decoration-none text-reset d-block h-100">
+                <a href="{% url 'job_detail' job.id %}"
+                   class="text-decoration-none text-reset d-block h-100">
 
 
                     <article class="h-100 bg-white border rounded-3 p-4 shadow-sm d-flex flex-column">
@@ -255,7 +279,6 @@
 
 
                             <div class="d-flex flex-wrap align-items-center gap-2">
-
 
                                 <h3 class="h5 fw-semibold mb-0">
 
@@ -304,13 +327,24 @@
 
                             <div class="d-flex align-items-center gap-2 mb-3">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
 
-                                    <rect x="3" y="4" width="18" height="16" rx="2" stroke-width="1.8">
+                                    <rect x="3"
+                                          y="4"
+                                          width="18"
+                                          height="16"
+                                          rx="2"
+                                          stroke-width="1.8">
                                     </rect>
 
-                                    <path d="M8 8h8M8 12h8M8 16h5" stroke-width="1.8" stroke-linecap="round">
+                                    <path d="M8 8h8M8 12h8M8 16h5"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round">
                                     </path>
 
                                 </svg>
@@ -329,14 +363,23 @@
 
                             <div class="d-flex align-items-center gap-2 mb-3">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
 
-                                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" stroke-width="1.8"
-                                        stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round">
                                     </path>
 
-                                    <circle cx="12" cy="10" r="2.5" stroke-width="1.8">
+                                    <circle cx="12"
+                                            cy="10"
+                                            r="2.5"
+                                            stroke-width="1.8">
                                     </circle>
 
                                 </svg>
@@ -355,14 +398,24 @@
 
                             <div class="d-flex align-items-center gap-2 mb-3">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
 
-                                    <rect x="3" y="7" width="18" height="13" rx="2" stroke-width="1.8">
+                                    <rect x="3"
+                                          y="7"
+                                          width="18"
+                                          height="13"
+                                          rx="2"
+                                          stroke-width="1.8">
                                     </rect>
 
-                                    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18" stroke-width="1.8"
-                                        stroke-linecap="round">
+                                    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round">
                                     </path>
 
                                 </svg>
@@ -381,14 +434,22 @@
 
                             <div class="d-flex align-items-center gap-2 mb-3">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
 
-                                    <circle cx="9" cy="8" r="3" stroke-width="1.8">
+                                    <circle cx="9"
+                                            cy="8"
+                                            r="3"
+                                            stroke-width="1.8">
                                     </circle>
 
                                     <path d="M3 20a6 6 0 0 1 12 0M16 11a3 3 0 1 0 0-6M18 14a5 5 0 0 1 3 6"
-                                        stroke-width="1.8" stroke-linecap="round">
+                                          stroke-width="1.8"
+                                          stroke-linecap="round">
                                     </path>
 
                                 </svg>
@@ -407,16 +468,30 @@
 
                             <div class="d-flex align-items-center gap-2">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
 
-                                    <rect x="3" y="6" width="18" height="12" rx="2" stroke-width="1.8">
+                                    <rect x="3"
+                                          y="6"
+                                          width="18"
+                                          height="12"
+                                          rx="2"
+                                          stroke-width="1.8">
                                     </rect>
 
-                                    <circle cx="12" cy="12" r="2.5" stroke-width="1.8">
+                                    <circle cx="12"
+                                            cy="12"
+                                            r="2.5"
+                                            stroke-width="1.8">
                                     </circle>
 
-                                    <path d="M7 9h.01M17 15h.01" stroke-width="1.8" stroke-linecap="round">
+                                    <path d="M7 9h.01M17 15h.01"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round">
                                     </path>
 
                                 </svg>
@@ -507,13 +582,22 @@
                 <div class="border rounded-3 p-5 text-center">
 
 
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        class="text-secondary">
+                    <svg width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         class="text-secondary">
 
-                        <circle cx="11" cy="11" r="7" stroke-width="1.8">
+                        <circle cx="11"
+                                cy="11"
+                                r="7"
+                                stroke-width="1.8">
                         </circle>
 
-                        <path d="m20 20-4-4" stroke-width="1.8" stroke-linecap="round">
+                        <path d="m20 20-4-4"
+                              stroke-width="1.8"
+                              stroke-linecap="round">
                         </path>
 
                     </svg>
@@ -606,7 +690,7 @@
                 <li class="page-item">
 
                     <a class="page-link"
-                        href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}">
+                       href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}">
 
                         Previous
 
@@ -653,7 +737,7 @@
                 <li class="page-item">
 
                     <a class="page-link"
-                        href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ num }}">
+                       href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ num }}">
 
                         {{ num }}
 
@@ -673,7 +757,7 @@
                 <li class="page-item">
 
                     <a class="page-link"
-                        href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ page_obj.next_page_number }}">
+                       href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ page_obj.next_page_number }}">
 
                         Next
 
@@ -718,7 +802,8 @@
             </h2>
 
 
-            <p class="mx-auto mt-2 text-dark" style="max-width: 650px;">
+            <p class="mx-auto mt-2 text-dark"
+               style="max-width: 650px;">
 
                 Be part of a team building technology that connects
                 people with astrology and meaningful experiences.
