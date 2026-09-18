@@ -44,6 +44,7 @@ class JobApplicationForm(forms.ModelForm):
 
             "resume": forms.ClearableFileInput(attrs={
                 "class": "block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600 file:mr-4 file:border-0 file:bg-yellow-400 file:px-5 file:py-3 file:font-semibold file:text-gray-900 hover:file:bg-yellow-500",
+                "accept": ".pdf",
             }),
 
             "cover_letter": forms.Textarea(attrs={

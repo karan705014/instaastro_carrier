@@ -31,7 +31,7 @@ def ListAPI(request):
     if department:
             data = data.filter(department=department)
 
-    paginator = Paginator(data, 3) # 10 jobs per page
+    paginator = Paginator(data, 6) # 6 jobs per page
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number) 
     context = {
