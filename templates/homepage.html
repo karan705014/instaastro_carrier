@@ -4,83 +4,172 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Careers |Page| InstaAstro</title>
+    <title>Careers | InstaAstro</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
-    <!-- Your existing CSS -->
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          href="{% static 'css/output.css' %}">
+
 </head>
+
 
 <body class="bg-white text-dark">
 
-    <!-- =========================
-         Hero Section
-    ========================== -->
+
+    <!-- ==================== HERO SECTION ==================== -->
+
     <section class="bg-gradient-to-b from-orange-50 to-white border-bottom">
 
         <div class="container py-5">
 
-            <div class="text-center mx-auto" style="max-width: 760px;">
+
+            <!-- Hero Content -->
+
+            <div class="text-center mx-auto"
+                 style="max-width: 760px;">
 
                 <p class="small fw-semibold text-uppercase text-warning mb-3">
                     Careers at InstaAstro
                 </p>
 
+
                 <h1 class="display-5 fw-bold">
                     Build the Future With Us
                 </h1>
 
+
                 <p class="lead text-secondary mt-3">
+
                     Join our team and help us build technology that connects
                     people with astrology and meaningful experiences.
+
                 </p>
 
             </div>
 
 
-            <!-- =========================
-                 Search Bar
-            ========================== -->
-            <div class="mx-auto mt-5" style="max-width: 760px;">
+            <!-- ==================== SEARCH & FILTER ==================== -->
 
-                <form method="GET" action="{% url 'careers' %}" id="searchForm" onsubmit="return validateSearch()">
+            <div class="mx-auto mt-5"
+                 style="max-width: 900px;">
 
-                    <div class="input-group input-group-lg">
-
-                        <span class="input-group-text bg-white border-end-0">
-
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                class="text-secondary">
-                                <circle cx="11" cy="11" r="7" stroke-width="2">
-                                </circle>
-
-                                <path d="m20 20-4-4" stroke-width="2" stroke-linecap="round">
-                                </path>
-                            </svg>
-
-                        </span>
+                <form method="GET"
+                      action="{% url 'job-list' %}"
+                      id="searchForm"
+                      onsubmit="return validateSearch()">
 
 
-                        <input type="text" name="q" id="searchInput" value="{{ request.GET.q|default:'' }}"
-                            placeholder="Search jobs by role, skills, or location..."
-                            class="form-control border-start-0">
+                    <div class="row g-2 align-items-center">
 
 
-                        <button type="submit" class="btn btn-warning px-4 fw-semibold">
-                            Search Jobs
-                        </button>
+                        <!-- Search -->
+
+                        <div class="col">
+
+                            <div class="input-group input-group-lg">
+
+
+                                <!-- Search Icon -->
+
+                                <span class="input-group-text bg-white border-end-0">
+
+                                    <svg width="20"
+                                         height="20"
+                                         viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         class="text-secondary">
+
+                                        <circle cx="11"
+                                                cy="11"
+                                                r="7"
+                                                stroke-width="2">
+                                        </circle>
+
+                                        <path d="m20 20-4-4"
+                                              stroke-width="2"
+                                              stroke-linecap="round">
+                                        </path>
+
+                                    </svg>
+
+                                </span>
+
+
+                                <!-- Search Input -->
+
+                                <input type="text"
+                                       name="q"
+                                       id="searchInput"
+                                       value="{{ search }}"
+                                       placeholder="Search jobs by role, skills, or location..."
+                                       class="form-control border-start-0">
+
+
+                                <!-- Search Button -->
+
+                                <button type="submit"
+                                        class="btn btn-warning px-4 fw-semibold">
+
+                                    Search Jobs
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Department Filter -->
+
+                        <div class="col-12 col-sm-auto">
+
+                            <select name="department"
+                                    class="form-select"
+                                    style="height: 48px; min-width: 190px;"
+                                    onchange="this.form.submit()">
+
+
+                                <option value="">
+
+                                    All Departments
+
+                                </option>
+
+
+                                {% for value, label in departments %}
+
+                                <option value="{{ value }}"
+                                        {% if department == value %}selected{% endif %}>
+
+                                    {{ label }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
 
                     </div>
 
 
                     <!-- Search Error -->
-                    <div id="searchError" class="text-danger small mt-2 d-none">
+
+                    <div id="searchError"
+                         class="text-danger small mt-2 d-none">
+
                         Please enter at least 3 characters to search.
+
                     </div>
 
                 </form>
@@ -92,148 +181,321 @@
     </section>
 
 
-    <!-- =========================
-         Jobs Section
-    ========================== -->
-    <main id="jobs" class="container py-5">
+    <!-- ==================== JOBS SECTION ==================== -->
+
+    <main id="jobs"
+          class="container py-5">
+
+
+        <!-- Section Heading -->
 
         <div class="mb-4">
 
+
+            {% if search and department %}
+
             <h2 class="fw-bold">
-                Open Positions
+
+                Search Results for "{{ search }}"
+
             </h2>
 
             <p class="text-secondary">
-                Explore opportunities and find the right role for you.
+
+                Showing jobs matching your search in the selected department.
+
             </p>
+
+
+            {% elif search %}
+
+            <h2 class="fw-bold">
+
+                Search Results for "{{ search }}"
+
+            </h2>
+
+            <p class="text-secondary">
+
+                Showing jobs matching your search.
+
+            </p>
+
+
+            {% elif department %}
+
+            <h2 class="fw-bold">
+
+                {{ department|title }} Jobs
+
+            </h2>
+
+            <p class="text-secondary">
+
+                Showing available jobs in this department.
+
+            </p>
+
+
+            {% else %}
+
+            <h2 class="fw-bold">
+
+                Open Positions
+
+            </h2>
+
+            <p class="text-secondary">
+
+                Explore opportunities and find the right role for you.
+
+            </p>
+
+            {% endif %}
 
         </div>
 
 
-        <!-- =========================
-             Job Grid
-        ========================== -->
+        <!-- ==================== JOB GRID ==================== -->
+
         <div class="row g-4">
+
 
             {% for job in jobs %}
 
+
             <div class="col-12 col-md-6 col-lg-4">
 
-                <!-- Entire card clickable -->
-                <a href="{% url 'job-detail' job.id %}" class="text-decoration-none text-reset d-block h-100">
+
+                <!-- Entire Card Clickable -->
+
+                <a href="{% url 'job-detail' job.id %}"
+                   class="text-decoration-none text-reset d-block h-100">
+
 
                     <article class="h-100 bg-white border rounded-3 p-4 shadow-sm d-flex flex-column">
 
+
                         <!-- Job Header -->
+
                         <div>
+
 
                             <div class="d-flex flex-wrap align-items-center gap-2">
 
+
                                 <h3 class="h5 fw-semibold mb-0">
+
                                     {{ job.role }}
+
                                 </h3>
 
+
                                 <span class="badge text-warning-emphasis bg-warning-subtle">
+
                                     {{ job.get_job_type_display }}
+
                                 </span>
 
                             </div>
 
+
                             <p class="text-secondary small mt-2 mb-0">
-                                Join the InstaAstro team
+
+                                {{ job.summary }}
+
                             </p>
 
                         </div>
 
 
                         <!-- Posted Date -->
+
                         <div class="mt-3">
 
                             <span class="small text-secondary">
+
                                 Posted {{ job.job_post_date|date:"M d, Y" }}
+
                             </span>
 
                         </div>
 
 
-                        <!-- Job Information -->
+                        <!-- ==================== JOB INFORMATION ==================== -->
+
                         <div class="border-top border-bottom py-3 my-4">
 
-                            <!-- Location -->
+
+                            <!-- Department -->
+
                             <div class="d-flex align-items-center gap-2 mb-3">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
-                                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" stroke-width="1.8"
-                                        stroke-linecap="round" stroke-linejoin="round">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
+
+                                    <rect x="3"
+                                          y="4"
+                                          width="18"
+                                          height="16"
+                                          rx="2"
+                                          stroke-width="1.8">
+                                    </rect>
+
+                                    <path d="M8 8h8M8 12h8M8 16h5"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round">
                                     </path>
 
-                                    <circle cx="12" cy="10" r="2.5" stroke-width="1.8">
+                                </svg>
+
+
+                                <span class="small">
+
+                                    {{ job.get_department_display }}
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- Location -->
+
+                            <div class="d-flex align-items-center gap-2 mb-3">
+
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
+
+                                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round">
+                                    </path>
+
+                                    <circle cx="12"
+                                            cy="10"
+                                            r="2.5"
+                                            stroke-width="1.8">
                                     </circle>
 
                                 </svg>
 
+
                                 <span class="small">
+
                                     {{ job.location }}
+
                                 </span>
 
                             </div>
 
 
                             <!-- Experience -->
+
                             <div class="d-flex align-items-center gap-2 mb-3">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
-                                    <rect x="3" y="7" width="18" height="13" rx="2" stroke-width="1.8">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
+
+                                    <rect x="3"
+                                          y="7"
+                                          width="18"
+                                          height="13"
+                                          rx="2"
+                                          stroke-width="1.8">
                                     </rect>
 
-                                    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18" stroke-width="1.8"
-                                        stroke-linecap="round">
+                                    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round">
                                     </path>
 
                                 </svg>
 
+
                                 <span class="small">
+
                                     {{ job.min_exp }} - {{ job.max_exp }} years
+
                                 </span>
 
                             </div>
 
 
                             <!-- Vacancies -->
+
                             <div class="d-flex align-items-center gap-2 mb-3">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
-                                    <circle cx="9" cy="8" r="3" stroke-width="1.8">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
+
+                                    <circle cx="9"
+                                            cy="8"
+                                            r="3"
+                                            stroke-width="1.8">
                                     </circle>
 
                                     <path d="M3 20a6 6 0 0 1 12 0M16 11a3 3 0 1 0 0-6M18 14a5 5 0 0 1 3 6"
-                                        stroke-width="1.8" stroke-linecap="round">
+                                          stroke-width="1.8"
+                                          stroke-linecap="round">
                                     </path>
 
                                 </svg>
 
+
                                 <span class="small">
+
                                     {{ job.vacancies }} Vacancies
+
                                 </span>
 
                             </div>
 
 
                             <!-- Salary -->
+
                             <div class="d-flex align-items-center gap-2">
 
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    class="text-secondary flex-shrink-0">
-                                    <rect x="3" y="6" width="18" height="12" rx="2" stroke-width="1.8">
+                                <svg width="16"
+                                     height="16"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     class="text-secondary flex-shrink-0">
+
+                                    <rect x="3"
+                                          y="6"
+                                          width="18"
+                                          height="12"
+                                          rx="2"
+                                          stroke-width="1.8">
                                     </rect>
 
-                                    <circle cx="12" cy="12" r="2.5" stroke-width="1.8">
+                                    <circle cx="12"
+                                            cy="12"
+                                            r="2.5"
+                                            stroke-width="1.8">
                                     </circle>
 
-                                    <path d="M7 9h.01M17 15h.01" stroke-width="1.8" stroke-linecap="round">
+                                    <path d="M7 9h.01M17 15h.01"
+                                          stroke-width="1.8"
+                                          stroke-linecap="round">
                                     </path>
 
                                 </svg>
@@ -242,13 +504,36 @@
                                 {% if job.min_salary and job.max_salary %}
 
                                 <span class="small">
+
                                     ₹{{ job.min_salary }} - ₹{{ job.max_salary }}
+
                                 </span>
+
+
+                                {% elif job.min_salary %}
+
+                                <span class="small">
+
+                                    ₹{{ job.min_salary }}+
+
+                                </span>
+
+
+                                {% elif job.max_salary %}
+
+                                <span class="small">
+
+                                    Up to ₹{{ job.max_salary }}
+
+                                </span>
+
 
                                 {% else %}
 
                                 <span class="small">
+
                                     Salary Not Disclosed
+
                                 </span>
 
                                 {% endif %}
@@ -258,23 +543,28 @@
                         </div>
 
 
-                        <!-- Job Footer -->
+                        <!-- ==================== JOB FOOTER ==================== -->
+
                         <div class="mt-auto">
+
 
                             <p class="small text-secondary mb-3">
 
                                 Apply before:
 
                                 <span class="fw-semibold text-dark">
+
                                     {{ job.end_apply_date|date:"M d, Y" }}
+
                                 </span>
 
                             </p>
 
 
-                            <!-- Apply Button -->
                             <span class="btn btn-warning w-100 fw-semibold">
+
                                 Apply Now
+
                             </span>
 
                         </div>
@@ -286,32 +576,98 @@
             </div>
 
 
+            <!-- ==================== EMPTY STATE ==================== -->
+
             {% empty %}
 
-            <!-- =========================
-                 Empty State
-            ========================== -->
+
             <div class="col-12">
 
                 <div class="border rounded-3 p-5 text-center">
 
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        class="text-secondary">
-                        <circle cx="11" cy="11" r="7" stroke-width="1.8">
+
+                    <svg width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         class="text-secondary">
+
+                        <circle cx="11"
+                                cy="11"
+                                r="7"
+                                stroke-width="1.8">
                         </circle>
 
-                        <path d="m20 20-4-4" stroke-width="1.8" stroke-linecap="round">
+                        <path d="m20 20-4-4"
+                              stroke-width="1.8"
+                              stroke-linecap="round">
                         </path>
 
                     </svg>
 
+
+                    {% if search and department %}
+
                     <h3 class="h5 fw-semibold mt-3">
+
                         No Jobs Found
+
                     </h3>
 
                     <p class="text-secondary mb-0">
-                        Try searching with a different keyword.
+
+                        No jobs match "{{ search }}"
+                        in the selected department.
+
                     </p>
+
+
+                    {% elif search %}
+
+                    <h3 class="h5 fw-semibold mt-3">
+
+                        No Jobs Found
+
+                    </h3>
+
+                    <p class="text-secondary mb-0">
+
+                        No jobs match "{{ search }}".
+
+                    </p>
+
+
+                    {% elif department %}
+
+                    <h3 class="h5 fw-semibold mt-3">
+
+                        No Jobs Found
+
+                    </h3>
+
+                    <p class="text-secondary mb-0">
+
+                        No jobs are available in this department.
+
+                    </p>
+
+
+                    {% else %}
+
+                    <h3 class="h5 fw-semibold mt-3">
+
+                        No Open Positions
+
+                    </h3>
+
+                    <p class="text-secondary mb-0">
+
+                        There are currently no open positions.
+
+                    </p>
+
+                    {% endif %}
 
                 </div>
 
@@ -321,23 +677,142 @@
 
         </div>
 
+
+        <!-- ==================== PAGINATION ==================== -->
+
+        {% if page_obj.has_other_pages %}
+
+        <nav class="mt-5"
+             aria-label="Job pagination">
+
+            <ul class="pagination justify-content-center">
+
+
+                <!-- Previous -->
+
+                {% if page_obj.has_previous %}
+
+                <li class="page-item">
+
+                    <a class="page-link"
+                       href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}">
+
+                        Previous
+
+                    </a>
+
+                </li>
+
+
+                {% else %}
+
+                <li class="page-item disabled">
+
+                    <span class="page-link">
+
+                        Previous
+
+                    </span>
+
+                </li>
+
+                {% endif %}
+
+
+                <!-- Page Numbers -->
+
+                {% for num in page_obj.paginator.page_range %}
+
+
+                {% if page_obj.number == num %}
+
+                <li class="page-item active">
+
+                    <span class="page-link">
+
+                        {{ num }}
+
+                    </span>
+
+                </li>
+
+
+                {% else %}
+
+                <li class="page-item">
+
+                    <a class="page-link"
+                       href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ num }}">
+
+                        {{ num }}
+
+                    </a>
+
+                </li>
+
+                {% endif %}
+
+                {% endfor %}
+
+
+                <!-- Next -->
+
+                {% if page_obj.has_next %}
+
+                <li class="page-item">
+
+                    <a class="page-link"
+                       href="?{% if search %}q={{ search|urlencode }}&{% endif %}{% if department %}department={{ department|urlencode }}&{% endif %}page={{ page_obj.next_page_number }}">
+
+                        Next
+
+                    </a>
+
+                </li>
+
+
+                {% else %}
+
+                <li class="page-item disabled">
+
+                    <span class="page-link">
+
+                        Next
+
+                    </span>
+
+                </li>
+
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+        {% endif %}
+
     </main>
 
 
-    <!-- =========================
-         Careers CTA
-    ========================== -->
+    <!-- ==================== CTA ==================== -->
+
     <section class="bg-warning">
 
         <div class="container py-5 text-center">
 
             <h2 class="fw-bold">
+
                 Grow With InstaAstro
+
             </h2>
 
-            <p class="mx-auto mt-2 text-dark" style="max-width: 650px;">
+
+            <p class="mx-auto mt-2 text-dark"
+               style="max-width: 650px;">
+
                 Be part of a team building technology that connects
                 people with astrology and meaningful experiences.
+
             </p>
 
         </div>
@@ -345,15 +820,17 @@
     </section>
 
 
-    <!-- =========================
-         Footer
-    ========================== -->
+    <!-- ==================== FOOTER ==================== -->
+
     <footer class="border-top bg-white">
 
         <div class="container py-4 text-center">
 
             <p class="small text-secondary mb-0">
-                © {% now "Y" %} InstaAstro. All rights reserved.
+
+                © {% now "Y" %} InstaAstro.
+                All rights reserved.
+
             </p>
 
         </div>
@@ -362,8 +839,17 @@
 
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/search_validation.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- Search Validation -->
+
+    <script src="{% static 'js/search_validation.js' %}">
+    </script>
+
+
 </body>
 
 </html>

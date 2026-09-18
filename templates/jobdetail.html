@@ -15,7 +15,7 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
-    <!-- Existing CSS -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 
 </head>
@@ -33,7 +33,7 @@
         <div class="container py-3">
 
             <a
-                href="{% url 'careers' %}"
+                href="{% url 'job-list' %}"
                 class="text-decoration-none text-secondary small"
             >
                 ← Back to Careers
@@ -107,7 +107,6 @@
 
     <main class="container py-4">
 
-
         <!-- Outer Job Box -->
 
         <div class="position-relative bg-white border rounded-3 shadow-sm p-4 p-lg-5">
@@ -145,6 +144,8 @@
 
                     <!-- Job Description -->
 
+                    {% if job.description %}
+
                     <section>
 
                         <h2 class="h5 fw-bold mb-3">
@@ -152,15 +153,17 @@
                         </h2>
 
                         <div class="text-secondary">
-
                             {{ job.description|linebreaks }}
-
                         </div>
 
                     </section>
 
+                    {% endif %}
+
 
                     <!-- Education -->
+
+                    {% if job.edu_requirment %}
 
                     <section class="mt-5">
 
@@ -169,15 +172,17 @@
                         </h2>
 
                         <div class="text-secondary">
-
                             {{ job.edu_requirment|linebreaks }}
-
                         </div>
 
                     </section>
 
+                    {% endif %}
+
 
                     <!-- Skills -->
+
+                    {% if job.skill_requirment %}
 
                     <section class="mt-5">
 
@@ -186,12 +191,12 @@
                         </h2>
 
                         <div class="text-secondary">
-
                             {{ job.skill_requirment|linebreaks }}
-
                         </div>
 
                     </section>
+
+                    {% endif %}
 
 
                 </div>

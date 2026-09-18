@@ -1,36 +1,45 @@
 from .models import Job
 from django.shortcuts import render
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 
 
-# for display all job
+# for display all job and also the search data 
 def ListAPI(request):
-    data = Job.objects.all()    
+    data = Job.objects.all().order_by("-job_post_date")
+    search = request.GET.get("q", "").strip()
+    # Get department filter
+    department = request.GET.get("department", "").strip()
+
+    if search:
+            words = search.split()
+            query = Q()
+            for word in words:
+                query = query | (
+                    Q(role__icontains=word)
+                    | Q(department__icontains=word)
+                    | Q(location__icontains=word)
+                    | Q(skill_requirment__icontains=word)
+                )
+
+            data = data.filter(query).distinct()
+    if department:
+            data = data.filter(department=department)
+
+    paginator = Paginator(data, 3) # 10 jobs per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number) 
     context = {
-        'jobs': data  
+        "jobs": page_obj,
+        "page_obj": page_obj,
+        "search": search,
+        "department": department,
+        "departments": Job.Department_Type.choices,
     }
     return render(request, "homepage.html", context)
-
-
-# for display search data
-def Job_List(request):
-    jobs = Job.objects.all()
-    search = request.GET.get("q", "").strip()
-    if search:
-        words = search.split()
-        query = Q()
-        for word in words:
-            query = query | (
-                Q(role__icontains=word)
-                | Q(department__icontains=word)
-                | Q(location__icontains=word)
-                | Q(skill_requirment__icontains=word)
-            )
-        jobs = jobs.filter(query).distinct()
-    return render(request, "searchoutput.html",{"jobs": jobs})
 
 
 #for details data of job
