@@ -48,7 +48,8 @@ def ListAPI(request):
 def Job_Detail(request, id):
     job = get_object_or_404(Job, id=id)
     return render(request, "jobdetail.html", {"job": job})
- 
+
+
 def Job_Apply(request, id):
     job = get_object_or_404(Job, id=id)
 
