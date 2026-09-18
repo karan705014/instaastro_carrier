@@ -94,11 +94,6 @@ class JobAdmin(admin.ModelAdmin):
 class JobApplicationAdmin(admin.ModelAdmin):
     # Job Application list page
     list_display = (
-        "job",
-        "name",
-        "email",
-        "phone",
-        "resume",
         "applied_at",
     )
 
