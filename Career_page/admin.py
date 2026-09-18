@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Job
+from .models import Job, JobApplication
 
 
 @admin.register(Job)
@@ -88,3 +88,35 @@ class JobAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+
+@admin.register(JobApplication)
+class JobApplicationAdmin(admin.ModelAdmin):
+    # Job Application list page
+    list_display = (
+        "job",
+        "name",
+        "email",
+        "phone",
+        "resume",
+        "applied_at",
+    )
+
+    # Filters on the right side
+    list_filter = (
+        "job",
+        "applied_at",
+    )
+
+    # Admin search
+    search_fields = (
+        "name",
+        "email",
+        "phone",
+    )
+
+    # Latest applications first
+    ordering = ("-applied_at",)
+
+    # Applications per page
+    list_per_page = 25

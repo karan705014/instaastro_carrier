@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Apply for {{ job.role }} | InstaAstro Careers
+    </title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+
+<body class="min-h-screen bg-gray-50 text-gray-900">
+
+
+    <!-- =========================
+         Header
+    ========================== -->
+
+    <header class="border-b border-gray-200 bg-white">
+
+        <div class="mx-auto max-w-6xl px-4 py-5 sm:px-6">
+
+            <a
+                href="{% url 'job_detail' job.id %}"
+                class="inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition hover:text-gray-900"
+            >
+                <span class="text-lg">←</span>
+                Back to Job Details
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         Main
+    ========================== -->
+
+    <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
+
+
+        <div class="grid gap-8 lg:grid-cols-3">
+
+
+            <!-- =========================
+                 Left - Job Information
+            ========================== -->
+
+            <div class="lg:col-span-1">
+
+                <div class="sticky top-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+
+                    <div
+                        class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-100 text-2xl"
+                    >
+                        💼
+                    </div>
+
+
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">
+                        {{ job.role }}
+                    </h1>
+
+
+                    {% if job.summary %}
+
+                    <p class="mt-3 text-sm leading-6 text-gray-500">
+                        {{ job.summary }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <!-- Job information -->
+
+                    <div class="mt-6 space-y-4 border-t border-gray-100 pt-6">
+
+
+                        <div class="flex items-start gap-3">
+
+                            <div class="mt-0.5 text-gray-400">
+                                📍
+                            </div>
+
+                            <div>
+                                <p class="text-xs text-gray-400">
+                                    Location
+                                </p>
+
+                                <p class="mt-1 text-sm font-medium text-gray-800">
+                                    {{ job.location }}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="flex items-start gap-3">
+
+                            <div class="mt-0.5 text-gray-400">
+                                🏢
+                            </div>
+
+                            <div>
+                                <p class="text-xs text-gray-400">
+                                    Department
+                                </p>
+
+                                <p class="mt-1 text-sm font-medium text-gray-800">
+                                    {{ job.get_department_display }}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="flex items-start gap-3">
+
+                            <div class="mt-0.5 text-gray-400">
+                                💼
+                            </div>
+
+                            <div>
+                                <p class="text-xs text-gray-400">
+                                    Job Type
+                                </p>
+
+                                <p class="mt-1 text-sm font-medium text-gray-800">
+                                    {{ job.get_job_type_display }}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="flex items-start gap-3">
+
+                            <div class="mt-0.5 text-gray-400">
+                                🏠
+                            </div>
+
+                            <div>
+                                <p class="text-xs text-gray-400">
+                                    Work Mode
+                                </p>
+
+                                <p class="mt-1 text-sm font-medium text-gray-800">
+                                    {{ job.get_work_mode_display }}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Deadline -->
+
+                    <div class="mt-6 rounded-xl bg-yellow-50 p-4">
+
+                        <p class="text-xs font-medium text-yellow-700">
+                            Application Deadline
+                        </p>
+
+                        <p class="mt-1 text-sm font-bold text-gray-900">
+                            {{ job.end_apply_date|date:"M d, Y" }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 Right - Application Form
+            ========================== -->
+
+            <div class="lg:col-span-2">
+
+
+                <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+
+
+                    <!-- Heading -->
+
+                    <div class="mb-8">
+
+                        <p class="text-sm font-semibold text-yellow-600">
+                            JOB APPLICATION
+                        </p>
+
+                        <h2 class="mt-2 text-3xl font-bold tracking-tight text-gray-900">
+                            Apply for this position
+                        </h2>
+
+                        <p class="mt-2 text-sm leading-6 text-gray-500">
+                            Fill in your details below and our hiring team
+                            will review your application.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Form -->
+
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                        class="space-y-6"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <!-- Form Errors -->
+
+                        {% if form.non_field_errors %}
+
+                        <div class="rounded-xl border border-red-200 bg-red-50 p-4">
+
+                            {% for error in form.non_field_errors %}
+
+                            <p class="text-sm text-red-600">
+                                {{ error }}
+                            </p>
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- Name -->
+
+                        <div>
+
+                            <label
+                                for="{{ form.name.id_for_label }}"
+                                class="mb-2 block text-sm font-semibold text-gray-700"
+                            >
+                                Full Name
+                                <span class="text-red-500">*</span>
+                            </label>
+
+                            {{ form.name }}
+
+                            {% for error in form.name.errors %}
+
+                            <p class="mt-1 text-xs text-red-600">
+                                {{ error }}
+                            </p>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- Email + Phone -->
+
+                        <div class="grid gap-6 sm:grid-cols-2">
+
+
+                            <div>
+
+                                <label
+                                    for="{{ form.email.id_for_label }}"
+                                    class="mb-2 block text-sm font-semibold text-gray-700"
+                                >
+                                    Email Address
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                                {{ form.email }}
+
+                                {% for error in form.email.errors %}
+
+                                <p class="mt-1 text-xs text-red-600">
+                                    {{ error }}
+                                </p>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <div>
+
+                                <label
+                                    for="{{ form.phone.id_for_label }}"
+                                    class="mb-2 block text-sm font-semibold text-gray-700"
+                                >
+                                    Phone Number
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                                {{ form.phone }}
+
+                                {% for error in form.phone.errors %}
+
+                                <p class="mt-1 text-xs text-red-600">
+                                    {{ error }}
+                                </p>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- Resume -->
+
+                        <div>
+
+                            <label
+                                for="{{ form.resume.id_for_label }}"
+                                class="mb-2 block text-sm font-semibold text-gray-700"
+                            >
+                                Resume
+                                <span class="text-red-500">*</span>
+                            </label>
+
+                            {{ form.resume }}
+
+                            <p class="mt-2 text-xs text-gray-400">
+                                Upload your latest resume.
+                            </p>
+
+                            {% for error in form.resume.errors %}
+
+                            <p class="mt-1 text-xs text-red-600">
+                                {{ error }}
+                            </p>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- Cover Letter -->
+
+                        <div>
+
+                            <label
+                                for="{{ form.cover_letter.id_for_label }}"
+                                class="mb-2 block text-sm font-semibold text-gray-700"
+                            >
+                                Cover Letter
+                                <span class="text-gray-400">
+                                    (Optional)
+                                </span>
+                            </label>
+
+                            {{ form.cover_letter }}
+
+                            {% for error in form.cover_letter.errors %}
+
+                            <p class="mt-1 text-xs text-red-600">
+                                {{ error }}
+                            </p>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- Divider -->
+
+                        <div class="border-t border-gray-100"></div>
+
+
+                        <!-- Submit -->
+
+                        <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+
+                            <a
+                                href="{% url 'job_detail' job.id %}"
+                                class="inline-flex items-center justify-center rounded-xl border border-gray-200 px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+                            >
+                                Cancel
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-7 py-3 text-sm font-bold text-gray-900 shadow-sm transition hover:bg-yellow-500 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-yellow-200"
+                            >
+                                Submit Application
+                                <span class="ml-2">
+                                    →
+                                </span>
+                            </button>
+
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+
+                <!-- Privacy text -->
+
+                <p class="mt-5 text-center text-xs text-gray-400">
+                    By submitting this application, you agree to let InstaAstro
+                    review the information provided for recruitment purposes.
+                </p>
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         Footer
+    ========================== -->
+
+    <footer class="border-t border-gray-200 bg-white">
+
+        <div class="mx-auto max-w-6xl px-4 py-6 text-center sm:px-6">
+
+            <p class="text-xs text-gray-400">
+                © {% now "Y" %} InstaAstro. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>
