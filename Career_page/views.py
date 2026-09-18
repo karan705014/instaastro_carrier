@@ -1,9 +1,11 @@
+from django.contrib import messages
 from .models import Job
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from .forms import JobApplicationForm
 
 
 
@@ -47,3 +49,28 @@ def Job_Detail(request, id):
     job = get_object_or_404(Job, id=id)
     return render(request, "jobdetail.html", {"job": job})
  
+def Job_Apply(request, id):
+    job = get_object_or_404(Job, id=id)
+
+    if request.method == "POST":
+        form = JobApplicationForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.job = job
+            application.save()
+
+            messages.success(
+                request,
+                "Your application has been submitted successfully!"
+            )
+
+            return redirect("job_detail", id=job.id)
+
+    else:
+        form = JobApplicationForm()
+
+    return render(request, "jobapply.html", {
+        "job": job,
+        "form": form
+    })
