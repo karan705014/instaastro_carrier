@@ -1,3 +1,5 @@
+from pstats import Stats
+
 from django.contrib import messages
 from .models import Job
 from django.shortcuts import redirect, render
@@ -11,23 +13,23 @@ from .forms import JobApplicationForm
 
 # for display all job and also the search data 
 def ListAPI(request):
-    data = Job.objects.all().order_by("-job_post_date")
+    data = Job.objects.filter(status=Job.Status.ACTIVE).order_by("-job_post_date")
     search = request.GET.get("q", "").strip()
     # Get department filter
     department = request.GET.get("department", "").strip()
 
     if search:
-            words = search.split()
-            query = Q()
-            for word in words:
-                query = query | (
-                    Q(role__icontains=word)
-                    | Q(department__icontains=word)
-                    | Q(location__icontains=word)
-                    | Q(skill_requirment__icontains=word)
-                )
+        words = search.split()
 
-            data = data.filter(query).distinct()
+        # AND between words
+        for word in words:
+            data = data.filter(
+                Q(role__icontains=word)
+                | Q(summary__icontains=word)
+                | Q(description__icontains=word)
+                | Q(skill_requirment__icontains=word)
+            )
+
     if department:
             data = data.filter(department=department)
 
